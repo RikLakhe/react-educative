@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inputwithlabel describe block renders snapshot 1`] = `
+Array [
+  <label
+    htmlFor={1}
+  >
+    test
+  </label>,
+  " ",
+  <input
+    id={1}
+    onChange={[MockFunction]}
+    type="text"
+    value="React"
+  />,
+]
+`;
