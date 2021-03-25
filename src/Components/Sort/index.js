@@ -22,7 +22,7 @@ const Sort = props =>{
                 >
                     {sortItem.title}
                     <span>
-                        {sortByTerm===sortItem.key && "*" }
+                        {sortByTerm===sortItem.key && ( sortOrderTerm==='asc' ? "^" : "v") }
                     </span>
                     </button>)
             })

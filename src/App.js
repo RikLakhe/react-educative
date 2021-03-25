@@ -21,7 +21,7 @@ const storiesReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        data: action.payload,
+        data:  _.orderBy(action.payload,[action.sortBy],[action.sortOrder]),
       };
     case 'STORIES_FETCH_FAILURE':
       return {
@@ -32,12 +32,12 @@ const storiesReducer = (state, action) => {
     case 'STORIES_SORT':
       return {
         ...state,
-        data: _.orderBy(state.data,[action.payload.sortBy],[action.payload.sortOrder])
+        data: _.orderBy(state.data,[action.sortBy],[action.sortOrder])
       };
     case 'STORIES_SORT_RESET':
         return {
           ...state,
-          data: _.orderBy(state.data,['points'],['asc'])
+          data: _.orderBy(state.data,['title'],['asc'])
         };
     case 'REMOVE_STORY':
       return {
@@ -60,8 +60,13 @@ const App = () => {
   const [url, setUrl] = React.useState(
     `${appConfig.API_ENDPOINT}${searchTerm}`
   );
-  const [sortByTerm, setSortByTerm] =  React.useState(
-    undefined
+  const [sortByTerm, setSortByTerm] =  useSemiPersistentState(
+    'sortBy',
+    'title'
+  );
+  const [sortOrderTerm, setSortOrderTerm] =  React.useState(
+    'sortOrder',
+    'asc'
   );
 
   const [stories, dispatchStories] = React.useReducer(
@@ -78,6 +83,8 @@ const App = () => {
       dispatchStories({
         type: 'STORIES_FETCH_SUCCESS',
         payload: result.data.hits,
+        sortBy: sortByTerm,
+        sortOrder: sortOrderTerm
       });
     } catch {
       dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
@@ -102,14 +109,26 @@ const App = () => {
   const handleSearchSubmit = event => {
     setUrl(`${appConfig.API_ENDPOINT}${searchTerm}`);
     setSortByTerm(undefined);
+    setSortOrderTerm('asc')
     event.preventDefault();
   };
 
   const handleSortButtonClick = item =>{
-    setSortByTerm(item)
+    if(sortByTerm === item){
+      if(sortOrderTerm === 'asc'){
+        setSortOrderTerm('desc')
+      }else{
+        setSortOrderTerm('asc')
+      }
+    }else{
+      setSortByTerm(item)
+      setSortOrderTerm('asc')
+    }
+  
     dispatchStories({
       type: 'STORIES_SORT',
-      payload: {sortBy:item, sortOrder:'asc'},
+      sortBy: sortByTerm,
+      sortOrder: sortOrderTerm
     });
   }
 
@@ -123,6 +142,7 @@ const App = () => {
       />
       <Sort
         sortByTerm={sortByTerm}
+        sortOrderTerm={sortOrderTerm}
         onSortButtonClick={handleSortButtonClick}
       />
       <hr />
