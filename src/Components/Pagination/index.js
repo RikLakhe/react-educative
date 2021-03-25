@@ -15,9 +15,10 @@ const {
        onClick={()=>{
         onPaginationButtonClick(-1);
        }}
-       >{'<'}</button>}
+       >
+           {'<'}
+       </button>}
        <span className={"page-number"}>{pageNumber+1}</span>
-        
         <button 
        className={"page-button"}
        onClick={()=>{

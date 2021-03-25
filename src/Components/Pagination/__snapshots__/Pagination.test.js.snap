@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination describe block renders snapshot 1`] = `
+<div
+  className="pagination-section"
+>
+  <button
+    className="page-button"
+    onClick={[Function]}
+  >
+    &lt;
+  </button>
+  <span
+    className="page-number"
+  >
+    2
+  </span>
+  <button
+    className="page-button"
+    onClick={[Function]}
+  >
+    &gt;
+  </button>
+</div>
+`;

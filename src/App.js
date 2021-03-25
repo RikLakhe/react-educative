@@ -72,7 +72,6 @@ const App = () => {
     'asc'
   );
   const [pagination, setPagination] =  React.useState(0);
-console.log('her',pagination)
   const [stories, dispatchStories] = React.useReducer(
     storiesReducer,
     { data: [], isLoading: false, isError: false }

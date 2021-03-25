@@ -29,9 +29,44 @@ exports[`App renders snapshot 1`] = `
       Submit
     </button>
   </form>
+  <div
+    className="button-container"
+  >
+    <button
+      className="button-active"
+      onClick={[Function]}
+    >
+      Title
+      <span>
+        ^
+      </span>
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      Author
+      <span />
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      Points
+      <span />
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      Number of Comments
+      <span />
+    </button>
+  </div>
   <hr />
   <p>
     Something went wrong ...
   </p>
+  <hr />
 </div>
 `;
