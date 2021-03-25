@@ -7,6 +7,7 @@ import useSemiPersistentState  from './CustomHooks/useSemiPresistentState';
 import List from './Components/List';
 import SearchForm from './Components/SearchForm';
 import Sort from './Components/Sort';
+import Pagination from './Components/Pagination';
 
 const storiesReducer = (state, action) => {
   switch (action.type) {
@@ -22,6 +23,7 @@ const storiesReducer = (state, action) => {
         isLoading: false,
         isError: false,
         data:  _.orderBy(action.payload,[action.sortBy],[action.sortOrder]),
+        pagination: {pageNumber: action.pageNumber}
       };
     case 'STORIES_FETCH_FAILURE':
       return {
@@ -32,7 +34,7 @@ const storiesReducer = (state, action) => {
     case 'STORIES_SORT':
       return {
         ...state,
-        data: _.orderBy(state.data,[action.sortBy],[action.sortOrder])
+        data: _.orderBy(state.data,[action.sortBy],[action.sortOrder]),
       };
     case 'STORIES_SORT_RESET':
         return {
@@ -58,17 +60,19 @@ const App = () => {
   );
 
   const [url, setUrl] = React.useState(
-    `${appConfig.API_ENDPOINT}${searchTerm}`
+    `${appConfig.API_ENDPOINT}${appConfig.API_SEARCH}?${appConfig.PARAM_SEARCH}${searchTerm}`
   );
+
   const [sortByTerm, setSortByTerm] =  useSemiPersistentState(
     'sortBy',
     'title'
   );
-  const [sortOrderTerm, setSortOrderTerm] =  React.useState(
+  const [sortOrderTerm, setSortOrderTerm] =  useSemiPersistentState(
     'sortOrder',
     'asc'
   );
-
+  const [pagination, setPagination] =  React.useState(0);
+console.log('her',pagination)
   const [stories, dispatchStories] = React.useReducer(
     storiesReducer,
     { data: [], isLoading: false, isError: false }
@@ -107,10 +111,21 @@ const App = () => {
   };
 
   const handleSearchSubmit = event => {
-    setUrl(`${appConfig.API_ENDPOINT}${searchTerm}`);
+    setUrl(`${appConfig.API_ENDPOINT}${appConfig.API_SEARCH}?${appConfig.PARAM_SEARCH}${searchTerm}&${appConfig.PARAM_PAGE}${pagination}`);
     setSortByTerm(undefined);
     setSortOrderTerm('asc')
     event.preventDefault();
+  };
+
+  const handlePaginationButtonClick = increaseNumber => {
+    if(pagination === 0){
+      if(increaseNumber > 0){
+        setPagination(pagination + increaseNumber);
+      }
+    }else{
+      setPagination(pagination + increaseNumber);
+    }
+    setUrl(`${appConfig.API_ENDPOINT}${appConfig.API_SEARCH}?${appConfig.PARAM_SEARCH}${searchTerm}&${appConfig.PARAM_PAGE}${pagination}`);
   };
 
   const handleSortButtonClick = item =>{
@@ -131,6 +146,8 @@ const App = () => {
       sortOrder: sortOrderTerm
     });
   }
+
+  
 
   return (<div>
       <h1>My Hacker Stories</h1>
@@ -154,6 +171,11 @@ const App = () => {
       ) : (
         <List list={stories.data} onRemoveItem={handleRemoveStory} />
       )}
+<hr />
+      {
+        stories && stories.data.length > 0 &&
+      <Pagination pageNumber={pagination} onPaginationButtonClick={handlePaginationButtonClick}/>
+      }
     </div>);
 }
 

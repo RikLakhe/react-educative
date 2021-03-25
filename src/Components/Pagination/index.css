@@ -1,0 +1,14 @@
+.pagination-section{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.pagination-section .page-button{
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: cornflowerblue;
+    border: 0.02rem solid rgb(73, 107, 172);
+    border-radius: 5px;
+    box-shadow: cornflowerblue !important;
+}

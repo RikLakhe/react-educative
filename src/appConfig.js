@@ -1,5 +1,8 @@
 const appConfig = {
-    API_ENDPOINT : 'https://hn.algolia.com/api/v1/search?query=',
+    API_ENDPOINT : 'https://hn.algolia.com/api/v1',
+    API_SEARCH: '/search',
+    PARAM_SEARCH: 'query=',
+    PARAM_PAGE: 'page=',
     SORT_OPTIONS:[
         {
             key: 'title',
