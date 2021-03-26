@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './App';
-import List from './Components/List'
+import App from './index';
+import List from './List'
 import axios from 'axios';
 
 jest.mock('axios');

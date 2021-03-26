@@ -1,5 +1,5 @@
 import React from 'react'
-import appConfig from '../../appConfig'
+import appConfig from '../../../appConfig'
 
 import './index.css'
 

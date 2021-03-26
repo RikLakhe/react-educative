@@ -2,12 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
-import appConfig from './appConfig'
-import useSemiPersistentState  from './CustomHooks/useSemiPresistentState';
-import List from './Components/List';
-import SearchForm from './Components/SearchForm';
-import Sort from './Components/Sort';
-import Pagination from './Components/Pagination';
+import appConfig from '../../appConfig'
+import useSemiPersistentState  from '../../CustomHooks/useSemiPresistentState';
+import List from './List';
+import SearchForm from './SearchForm';
+import Sort from './Sort';
+import Pagination from './Pagination';
 
 const storiesReducer = (state, action) => {
   switch (action.type) {
